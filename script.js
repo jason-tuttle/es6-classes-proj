@@ -24,8 +24,9 @@ class Factory {
     this.abs = true;
     this.warranty = '60,000 miles / 3 years';
   }
-  massBuild(quantity, options) {
-    console.log(`Building ${quantity} ${options.color} ${options.trim} ${options.model}'s`);
+  static massBuild(quantity, options) {
+    const {color, trim, model} = options;
+    console.log(`Building ${quantity} ${color} ${trim} ${model}'s`);
   }
   customerBuild(color, options) {
     console.log(`Building one ${color} ${this.trim} ${this.model} with the following options: ${options}`);
@@ -44,7 +45,7 @@ class Car extends Factory {
   constructor({model, doors, color, enginetype, transmission, trim, wheelstrim, audio, seatstrim, moonroof}) {
     super();
     this.model = model;
-    this.doors = doors;
+    this.doors = doors || 4;
     this.color = color;
     this.enginetype = enginetype;
     this.transmission = transmission;
@@ -69,7 +70,7 @@ class Car extends Factory {
 // Write your code below:
 class Sport extends Car {
   constructor({model, trim, transmission, top, color, seatstrim, audio, wheelstrim}) {
-    super({model: model, trim: trim, transmission: transmission, color: color, audio: audio, wheelstrim: wheelstrim, seatstrim:seatstrim, moonroof:false, doors: 2});
+    super({model, trim, transmission, color, audio, wheelstrim, seatstrim, moonroof:false, doors: 2});
     this.top = top;
     this.enginetype = 'gasoline';
     this.convertible = true;
@@ -95,6 +96,8 @@ class Truck extends Factory {
     this.hitch = hitch;
     this.bed = bed;
     this.navigation = navigation;
+    this.backupcamera = true;
+    this.audio = 'basic';
   }
 }
 // model: 'Trail Blazer',
@@ -111,12 +114,13 @@ class Truck extends Factory {
 
 // MAZDA3 MASS PRODUCTION
 // Create an instance  Car.
-// The following properties must be specified: model (mazda3), color (red), enginetype (hybrid), transmission (automatic), trim (touring), wheels (base), audio (premium), seats (leather), and moonroof (true)
+// The following properties must be specified: model (mazda3), color (red),
+// enginetype (hybrid), transmission (automatic), trim (touring), wheels (base),
+// audio (premium), seats (leather), and moonroof (true)
 
 // Write your 'mazda3' instance below:
 const mazda3 = new Car({
   model: 'mazda3',
-  doors: 4,
   color: 'red',
   enginetype: 'hybrid',
   transmission: 'automatic',
@@ -137,7 +141,7 @@ console.log(mazda3);
 // Print calling massBuild(), building 35000 cars.
 // It should print: "Building 35000 Red Touring Mazda3's."
 // Write your code below:
-mazda3.massBuild(35000, mazda3);
+Factory.massBuild(35000, mazda3);
 
 
 
@@ -180,7 +184,7 @@ console.log(miataRf);
 // Print miataRf, calling massBuild(), building 15,000
 // It should print: "Building 15000 Red Grand Touring Miata-RF's."
 // Write your code below:
-miataRf.massBuild(15000, miataRf);
+Factory.massBuild(15000, miataRf);
 
 
 
@@ -221,7 +225,7 @@ console.log(trailBlazer);
 // Print trailBlazer, calling massBuid(). It should build 35000 trucks.
 // It should print: "Building 35000 blue Sport Trail Blazer's."
 // Wrint your code below:
-trailBlazer.massBuild(35000, trailBlazer);
+Factory.massBuild(35000, trailBlazer);
 
 
 
